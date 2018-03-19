@@ -37,6 +37,7 @@
             this.memoryAllocation = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.closeAfterStart = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // nick
@@ -46,7 +47,7 @@
             this.nick.Name = "nick";
             this.nick.Size = new System.Drawing.Size(100, 23);
             this.nick.TabIndex = 0;
-            this.nick.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.nick.TextChanged += new System.EventHandler(this.nick_TextChanged);
             this.nick.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.testLauncher_KeyPress);
             // 
             // nickDesc
@@ -58,7 +59,6 @@
             this.nickDesc.Size = new System.Drawing.Size(32, 15);
             this.nickDesc.TabIndex = 1;
             this.nickDesc.Text = "Nick";
-            this.nickDesc.Click += new System.EventHandler(this.label1_Click);
             // 
             // playButt
             // 
@@ -105,7 +105,6 @@
             this.label1.Size = new System.Drawing.Size(60, 15);
             this.label1.TabIndex = 5;
             this.label1.Text = "RAM (MB)";
-            this.label1.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // label2
             // 
@@ -117,7 +116,22 @@
             this.label2.Size = new System.Drawing.Size(110, 15);
             this.label2.TabIndex = 6;
             this.label2.Text = "*3 GB recommended";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // closeAfterStart
+            // 
+            this.closeAfterStart.AutoSize = true;
+            this.closeAfterStart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.closeAfterStart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.closeAfterStart.Checked = true;
+            this.closeAfterStart.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.closeAfterStart.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.closeAfterStart.Location = new System.Drawing.Point(164, 92);
+            this.closeAfterStart.Name = "closeAfterStart";
+            this.closeAfterStart.Size = new System.Drawing.Size(115, 19);
+            this.closeAfterStart.TabIndex = 7;
+            this.closeAfterStart.Text = "Close After Start";
+            this.closeAfterStart.UseVisualStyleBackColor = false;
+            this.closeAfterStart.CheckedChanged += new System.EventHandler(this.closeAfterStart_CheckedChanged);
             // 
             // testLauncher
             // 
@@ -127,6 +141,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(304, 141);
+            this.Controls.Add(this.closeAfterStart);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.memoryAllocation);
@@ -156,6 +171,7 @@
         private System.Windows.Forms.TextBox memoryAllocation;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox closeAfterStart;
     }
 }
 
