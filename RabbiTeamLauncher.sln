@@ -15,12 +15,12 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B543481A-10D1-4AA0-B7B9-A105964D061E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B543481A-10D1-4AA0-B7B9-A105964D061E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B543481A-10D1-4AA0-B7B9-A105964D061E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{B543481A-10D1-4AA0-B7B9-A105964D061E}.Debug|x64.Build.0 = Debug|Any CPU
+		{B543481A-10D1-4AA0-B7B9-A105964D061E}.Debug|x64.ActiveCfg = Debug|x64
+		{B543481A-10D1-4AA0-B7B9-A105964D061E}.Debug|x64.Build.0 = Debug|x64
 		{B543481A-10D1-4AA0-B7B9-A105964D061E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B543481A-10D1-4AA0-B7B9-A105964D061E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B543481A-10D1-4AA0-B7B9-A105964D061E}.Release|x64.ActiveCfg = Release|Any CPU
-		{B543481A-10D1-4AA0-B7B9-A105964D061E}.Release|x64.Build.0 = Release|Any CPU
+		{B543481A-10D1-4AA0-B7B9-A105964D061E}.Release|x64.ActiveCfg = Release|x64
+		{B543481A-10D1-4AA0-B7B9-A105964D061E}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
