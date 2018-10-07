@@ -135,7 +135,7 @@ namespace RabbiTeamLauncher
         }
 
         public static ComboBox PackList;
-        public static string LauncherVersion = "1.0";
+        public static string LauncherVersion = "1.0.1";
         public static Downloader Downloader = null;
         public static LauncherSettings Settings;
         public static string ModpackUrl;
