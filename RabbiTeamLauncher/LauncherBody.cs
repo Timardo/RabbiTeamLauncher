@@ -42,6 +42,7 @@ namespace RabbiTeamLauncher
                 {
                     InitializeStub();
                     Utils.DownloaderConstructor(downloadType: DownloadType.Deps);
+                    goto stubLabel;
                 }
 
                 else
