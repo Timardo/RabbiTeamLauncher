@@ -135,7 +135,7 @@ namespace RabbiTeamLauncher
         }
 
         public static ComboBox PackList;
-        public static string LauncherVersion = "1.0.1";
+        public static string LauncherVersion = "1.0.2";
         public static Downloader Downloader = null;
         public static LauncherSettings Settings;
         public static string ModpackUrl;
@@ -168,177 +168,191 @@ namespace RabbiTeamLauncher
 
         public async System.Threading.Tasks.Task PlayButtonClick()
         {
-            if (string.IsNullOrEmpty(NickBox.Text) || NickBox.Text.Contains(" ") || NickBox.Text.Contains("\\") || NickBox.Text.Contains("\""))
-            {
-                MessageBox.Show("Invalid nick format! Forbidden characters are spaces, backslashes and quotation marks. It also cannot be empty.");
-                return;
-            }
-
-            var response = ("http://tools.glowingmines.eu/convertor/nick/" + NickBox.Text).GetResponse(); //will be offical mojang server soon and this one will be for offline UUIDs only
-            var hasUuid = response != null ? true : false;
-            string uuid = Settings.LatestUuid;
-
-            if (hasUuid == true)
-            {
-                var JSONObj = response.FromJsonString<Dictionary<string, string>>();
-                uuid = JSONObj["offlineuuid"];
-                Settings.LatestUuid = uuid;
-            }
-
-            var proc = new Process();
-            var info = new ProcessStartInfo
-            {
-                WorkingDirectory = AppPath + "\\modpacks\\" + Settings.LatestModpack,
-                UseShellExecute = false
-            };
-            var memory = new ComputerInfo().TotalPhysicalMemory / (1024 ^ 2);
-            var memorymb = Convert.ToInt32(memory);
-            int allocatedMemory;
-            info.FileName = Settings.ShowConsole ? Utils.GetJavaInstallationPath() + "\\bin\\java.exe" : Utils.GetJavaInstallationPath() + "\\bin\\javaw.exe";
-
             try
             {
-                allocatedMemory = Convert.ToInt32(MemoryAllocationBox.Text);
-            }
-
-            catch
-            {
-                MessageBox.Show("Invalid memory allocation format! Type only numbers!");
-                MemoryAllocationBox.Text = "3000";
-                return;
-            }
-
-            if (memorymb < allocatedMemory)
-            {
-                MessageBox.Show("Not enough memory to allocate! You selected: " + allocatedMemory + "MB, and your maximum memory is " + memory + "MB.");
-                return;
-            }
-
-            var relativeLibsPath = "\\resources\\libraries\\";
-            List<string> noLibList = new List<string>();
-            var classPath = " -cp \"";
-            var modpackJson = Packs.ModpackList[Settings.LatestModpack];
-            var versionIdToUse = modpackJson.ForgeVersion != null ? modpackJson.ForgeFullId : modpackJson.MinecraftVersion;
-            var mcVersionJson = (AppPath + "\\resources/versions\\" + modpackJson.MinecraftVersion + "\\" + modpackJson.MinecraftVersion + ".json").ReadFile().FromJsonString<McVersionJson>();
-            var instanceIdentifier = versionIdToUse + "-natives-" + (DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - 3600000L); //official MC Launcher stuff
-            var mainClass = (AppPath + "\\resources\\versions\\" + modpackJson.MinecraftVersion + "\\" + modpackJson.MinecraftVersion + ".json").ReadFile().FromJsonString<McVersionJson>().MainClass;
-
-            if (!Directory.Exists(AppPath + "\\resources\\versions\\" + modpackJson.MinecraftVersion + "\\" + instanceIdentifier))
-                Directory.CreateDirectory(AppPath + "\\resources\\versions\\" + modpackJson.MinecraftVersion + "\\" + instanceIdentifier);
-
-            if (modpackJson.ForgeVersion != null)
-            {
-                var forgeJson = (AppPath + "\\resources\\versions\\" + modpackJson.ForgeFullId + "\\" + modpackJson.ForgeFullId + ".json").ReadFile().FromJsonString<ForgeJson>();
-                mainClass = forgeJson.MainClass;
-                string pathToLib;
-
-                foreach (var lib in forgeJson.Libraries)
+                if (Settings.LatestModpack == null)
                 {
-                    pathToLib = lib.Name.ToPath();
-
-                    if (!File.Exists(AppPath + relativeLibsPath + pathToLib))
-                        MessageBox.Show(AppPath + relativeLibsPath + pathToLib);
-
-                    else
-                        classPath += AppPath + relativeLibsPath + pathToLib + ";";
+                    MessageBox.Show("You have no pack selected, please select one");
+                    return;
                 }
-            }
 
-            foreach (var lib in Packs.ModpackList[Settings.LatestModpack].MinecraftVersion.ToMcJson().Libraries)
-            {
-                if (lib.Rules != null) //check if rules match our environment
-                    foreach (var rule in lib.Rules)
+                if (string.IsNullOrEmpty(NickBox.Text) || NickBox.Text.Contains(" ") || NickBox.Text.Contains("\\") || NickBox.Text.Contains("\""))
+                {
+                    MessageBox.Show("Invalid nick format! Forbidden characters are spaces, backslashes and quotation marks. It also cannot be empty.");
+                    return;
+                }
+
+                var response = ("http://tools.glowingmines.eu/convertor/nick/" + NickBox.Text).GetResponse(); //will be offical mojang server soon and this one will be for offline UUIDs only
+                var hasUuid = response != null ? true : false;
+                string uuid = Settings.LatestUuid;
+
+                if (hasUuid == true)
+                {
+                    var JSONObj = response.FromJsonString<Dictionary<string, string>>();
+                    uuid = JSONObj["offlineuuid"];
+                    Settings.LatestUuid = uuid;
+                }
+
+                var proc = new Process();
+                var info = new ProcessStartInfo
+                {
+                    WorkingDirectory = AppPath + "\\modpacks\\" + Settings.LatestModpack,
+                    UseShellExecute = false
+                };
+                var memory = new ComputerInfo().TotalPhysicalMemory / (1024 ^ 2);
+                var memorymb = Convert.ToInt32(memory);
+                int allocatedMemory;
+                info.FileName = Settings.ShowConsole ? Utils.GetJavaInstallationPath() + "\\bin\\java.exe" : Utils.GetJavaInstallationPath() + "\\bin\\javaw.exe";
+
+                try
+                {
+                    allocatedMemory = Convert.ToInt32(MemoryAllocationBox.Text);
+                }
+
+                catch
+                {
+                    MessageBox.Show("Invalid memory allocation format! Type only numbers!");
+                    MemoryAllocationBox.Text = "3000";
+                    return;
+                }
+
+                if (memorymb < allocatedMemory)
+                {
+                    MessageBox.Show("Not enough memory to allocate! You selected: " + allocatedMemory + "MB, and your maximum memory is " + memory + "MB.");
+                    return;
+                }
+
+                var relativeLibsPath = "\\resources\\libraries\\";
+                List<string> noLibList = new List<string>();
+                var classPath = " -cp \"";
+                var modpackJson = Packs.ModpackList[Settings.LatestModpack];
+                var versionIdToUse = modpackJson.ForgeVersion != null ? modpackJson.ForgeFullId : modpackJson.MinecraftVersion;
+                var mcVersionJson = (AppPath + "\\resources/versions\\" + modpackJson.MinecraftVersion + "\\" + modpackJson.MinecraftVersion + ".json").ReadFile().FromJsonString<McVersionJson>();
+                var instanceIdentifier = versionIdToUse + "-natives-" + (DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - 3600000L); //official MC Launcher stuff
+                var mainClass = (AppPath + "\\resources\\versions\\" + modpackJson.MinecraftVersion + "\\" + modpackJson.MinecraftVersion + ".json").ReadFile().FromJsonString<McVersionJson>().MainClass;
+
+                if (!Directory.Exists(AppPath + "\\resources\\versions\\" + modpackJson.MinecraftVersion + "\\" + instanceIdentifier))
+                    Directory.CreateDirectory(AppPath + "\\resources\\versions\\" + modpackJson.MinecraftVersion + "\\" + instanceIdentifier);
+
+                if (modpackJson.ForgeVersion != null)
+                {
+                    var forgeJson = (AppPath + "\\resources\\versions\\" + modpackJson.ForgeFullId + "\\" + modpackJson.ForgeFullId + ".json").ReadFile().FromJsonString<ForgeJson>();
+                    mainClass = forgeJson.MainClass;
+                    string pathToLib;
+
+                    foreach (var lib in forgeJson.Libraries)
                     {
-                        if (rule.Action == "allow")
-                            if (rule.Os != null)
-                                if (rule.Os.Name == "windows")
-                                    goto @continue; //if so, continue
+                        pathToLib = lib.Name.ToPath();
 
-                                else goto skip; //if one rule doesn't match the environent needs, abort the whole download -- needs testing
-                    }
-
-                @continue:
-
-                if (lib.Natives != null) //whether the lib contains natives
-                    if (lib.Natives.Windows != null) //whether the lib contains also windows natives
-                        if (lib.Natives.Windows.Contains("${arch}")) //whether the natives are arch-specific
-                        {
-                            if (Environment.Is64BitOperatingSystem) //resolve architecture
-                            {
-                                if (!File.Exists(AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows64.Path))
-                                    MessageBox.Show(AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows64.Path);
-
-                                else
-                                    await Utils.ExtractNatives(AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows64.Path, versionIdToUse, instanceIdentifier);
-                            }
-
-                            else
-                            {
-                                if (!File.Exists(AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows32.Path))
-                                    MessageBox.Show(AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows32.Path);
-
-                                else
-                                    await Utils.ExtractNatives(AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows64.Path, versionIdToUse, instanceIdentifier);
-                            }
-                        }
-
-                        else if (!File.Exists(AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows.Path))
-                            MessageBox.Show(AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows.Path); //if the lib doesn't contain arch-specific natives, just set the default ones for windows
+                        if (!File.Exists(AppPath + relativeLibsPath + pathToLib))
+                            MessageBox.Show("Missing lib! Path - " + AppPath + relativeLibsPath + pathToLib);
 
                         else
-                            await Utils.ExtractNatives(AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows.Path, versionIdToUse, instanceIdentifier);
-
-                    else goto skipNatives; //if the lib doesn't contain windows natives, skipping
-
-                skipNatives:
-
-                if (lib.Downloads.Artifact != null)
-                {
-                    if (!File.Exists(AppPath + relativeLibsPath + lib.Downloads.Artifact.Path))
-                        MessageBox.Show(AppPath + relativeLibsPath + lib.Downloads.Artifact.Path);
-
-                    else
-                        classPath += AppPath + relativeLibsPath + (lib.Downloads.Artifact.Path).Replace('/', '\\') + ";";
+                            classPath += AppPath + relativeLibsPath + pathToLib + ";";
+                    }
                 }
 
-                skip:;
+                foreach (var lib in Packs.ModpackList[Settings.LatestModpack].MinecraftVersion.ToMcJson().Libraries)
+                {
+                    if (lib.Rules != null) //check if rules match our environment
+                        foreach (var rule in lib.Rules)
+                        {
+                            if (rule.Action == "allow")
+                                if (rule.Os != null)
+                                    if (rule.Os.Name == "windows")
+                                        goto @continue; //if so, continue
+
+                                    else goto skip; //if one rule doesn't match the environent needs, abort the whole download -- needs testing
+                        }
+
+                    @continue:
+
+                    if (lib.Natives != null) //whether the lib contains natives
+                        if (lib.Natives.Windows != null) //whether the lib contains also windows natives
+                            if (lib.Natives.Windows.Contains("${arch}")) //whether the natives are arch-specific
+                            {
+                                if (Environment.Is64BitOperatingSystem) //resolve architecture
+                                {
+                                    if (!File.Exists(AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows64.Path))
+                                        MessageBox.Show("Missing lib! Path - " + AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows64.Path);
+
+                                    else
+                                        await Utils.ExtractNatives(AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows64.Path, versionIdToUse, instanceIdentifier);
+                                }
+
+                                else
+                                {
+                                    if (!File.Exists(AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows32.Path))
+                                        MessageBox.Show("Missing lib! Path - " + AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows32.Path);
+
+                                    else
+                                        await Utils.ExtractNatives(AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows64.Path, versionIdToUse, instanceIdentifier);
+                                }
+                            }
+
+                            else if (!File.Exists(AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows.Path))
+                                MessageBox.Show("Missing lib! Path - " + AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows.Path); //if the lib doesn't contain arch-specific natives, just set the default ones for windows
+
+                            else
+                                await Utils.ExtractNatives(AppPath + relativeLibsPath + lib.Downloads.Classifiers.NativesWindows.Path, versionIdToUse, instanceIdentifier);
+
+                        else goto skipNatives; //if the lib doesn't contain windows natives, skipping
+
+                    skipNatives:
+
+                    if (lib.Downloads.Artifact != null)
+                    {
+                        if (!File.Exists(AppPath + relativeLibsPath + lib.Downloads.Artifact.Path))
+                            MessageBox.Show("Missing lib! Path - " + AppPath + relativeLibsPath + lib.Downloads.Artifact.Path);
+
+                        else
+                            classPath += AppPath + relativeLibsPath + (lib.Downloads.Artifact.Path).Replace('/', '\\') + ";";
+                    }
+
+                    skip:;
+                }
+
+                classPath += AppPath + "\\resources\\versions\\" + modpackJson.MinecraftVersion + "\\" + modpackJson.MinecraftVersion + ".jar" + ";";
+
+                info.Arguments = JVMArguments +
+                    " -Xmx" + MemoryAllocationBox.Text + "M" + //Maximum RAM
+                    " -Djava.library.path=\"" + AppPath + "\\resources\\versions\\" + versionIdToUse + "\\" + instanceIdentifier + "\"" + //Natives path
+                    classPath + "\"" + //classpath (all libs + client)
+                    " " + mainClass + //TODO minecraftArguments from forge/minecraft json
+                    " --username " + NickBox.Text + //nick
+                    " --version " + versionIdToUse + //version to use idk the purpose of this
+                    " --gameDir \"" + info.WorkingDirectory + "\"" + //game directory
+                    " --assetsDir \"" + AppPath + "\\resources\\assets\"" + //assets dir
+                    " --assetIndex " + mcVersionJson.Assets +
+                    " --uuid " + uuid +
+                    " --accessToken 0" + //access token, planned to be working with 'online' accounts too
+                    " --userProperties {} " + //TODO properties such as resolution
+                    "--userType legacy" + //planned to be legacy/mojang
+                    " --tweakClass cpw.mods.fml.common.launcher.FMLTweaker"; //also will be variable set
+                Utils.Log("Full java arguments: " + info.Arguments);
+
+                if ((info.Arguments.Length) > 8192)
+                {
+                    MessageBox.Show("Path of installation is too long! Migrate your installation to another folder with shorter path!" + Environment.NewLine + "(Advanced Settings -> Migrate)");
+                    return;
+                }
+
+                if (hasUuid == false)
+                {
+                    MessageBox.Show("Not valid UUID, play multiplayer at your own risk!");
+                }
+
+                proc.StartInfo = info;
+                proc.Start();
+
+                if (Settings.CloseAfterStart == true)
+                    Application.Exit();
             }
 
-            classPath += AppPath + "\\resources\\versions\\" + modpackJson.MinecraftVersion + "\\" + modpackJson.MinecraftVersion + ".jar" + ";";
-
-            info.Arguments = JVMArguments + 
-                " -Xmx" + MemoryAllocationBox.Text + "M" + //Maximum RAM
-                " -Djava.library.path=\"" + AppPath + "\\resources\\versions\\" + versionIdToUse + "\\" + instanceIdentifier + "\"" + //Natives path
-                classPath + "\"" + //classpath (all libs + client)
-                " " + mainClass + //TODO minecraftArguments from forge/minecraft json
-                " --username " + NickBox.Text + //nick
-                " --version " + versionIdToUse + //version to use idk the purpose of this
-                " --gameDir \"" + info.WorkingDirectory + "\"" + //game directory
-                " --assetsDir \"" + AppPath + "\\resources\\assets\"" + //assets dir
-                " --assetIndex " + mcVersionJson.Assets + 
-                " --uuid " + uuid + 
-                " --accessToken 0" + //access token, planned to be working with 'online' accounts too
-                " --userProperties {} " + //TODO properties such as resolution
-                "--userType legacy" + //planned to be legacy/mojang
-                " --tweakClass cpw.mods.fml.common.launcher.FMLTweaker"; //also will be variable set
-
-            if ((info.Arguments.Length) > 8192)
+            catch (Exception ex)
             {
-                MessageBox.Show("Path of installation is too long! Migrate your installation to another folder with shorter path!" + Environment.NewLine + "(Advanced Settings -> Migrate)");
-                return;
+                MessageBox.Show("PlayButtonClick failed - " + ex);
             }
-
-            if (hasUuid == false)
-            {
-                MessageBox.Show("Not valid UUID, play multiplayer at your own risk!");
-            }
-
-            proc.StartInfo = info;
-            proc.Start();
-
-            if (Settings.CloseAfterStart == true)
-                Application.Exit();
-
         }
 
         private void MemoryAllocationBoxTextChanged(object sender, EventArgs e)
@@ -370,8 +384,19 @@ namespace RabbiTeamLauncher
 
         private void LauncherBodyClosing(object sender, FormClosingEventArgs e)
         {
-            Cef.Shutdown();
-            File.WriteAllText(AppPath + "/settings.json", Settings.ToJsonString());
+            try
+            {
+                Cef.Shutdown();
+                File.WriteAllText(AppPath + "/settings.json", Settings.ToJsonString());
+
+                if (File.Exists(AppPath + "/update_launcher.bat"))
+                    Process.Start(AppPath + "/update_launcher.bat");
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("LauncherBodyClosing failed, how did this even happen? " + ex);
+            }
         }
 
         private void LauncherBodyResize(object sender, EventArgs e) //resizing and relocating part, because dock is not enough for me
