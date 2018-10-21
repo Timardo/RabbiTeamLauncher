@@ -116,5 +116,10 @@ namespace RabbiTeamLauncher
             else
                 LB.Settings.CloseAfterStart = false;
         }
+
+        private void OpenFolderButtClick(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(LB.AppPath);
+        }
     }
 }

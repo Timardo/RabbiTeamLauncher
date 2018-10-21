@@ -14,7 +14,7 @@ namespace RabbiTeamLauncher
     {
         public LauncherBody()
         {
-            if (LauncherVersion != UpdateInfo.Version) //if the version doesn't match, there will be new one to download, no prompt to prevent incompatibility
+            if (UpdateInfo.Version.IsHigherThan(LauncherVersion)) //if the version doesn't match, there will be new one to download, no prompt to prevent incompatibility
                 Utils.DownloaderConstructor(uri: UpdateInfo.UpdateUrl,
                     output: "/RabbiTeamLauncherNew.exe",
                     completedAction: new Utils.DownloadCompletedAction(Utils.UpdateLauncher));
@@ -135,7 +135,7 @@ namespace RabbiTeamLauncher
         }
 
         public static ComboBox PackList;
-        public static string LauncherVersion = "1.0.2";
+        public static string LauncherVersion = "1.0.3";
         public static Downloader Downloader = null;
         public static LauncherSettings Settings;
         public static string ModpackUrl;
@@ -147,7 +147,7 @@ namespace RabbiTeamLauncher
         {
             { "Deps", new string[] { "cef.pak", "cef_100_percent.pak", "cef_200_percent.pak", "cef_extensions.pak", "CefSharp.BrowserSubprocess.Core.dll", "CefSharp.BrowserSubprocess.exe", "CefSharp.Core.dll", "CefSharp.dll", "CefSharp.WinForms.dll", "chrome_elf.dll", "d3dcompiler_47.dll", "icudtl.dat", "libcef.dll", "natives_blob.bin", "snapshot_blob.bin", "Microsoft.WindowsAPICodePack.dll", "Microsoft.WindowsAPICodePack.Shell.dll", "Newtonsoft.Json.dll", "SharpCompress.dll" } },
             { "MCStuff", new string[] { "modpacks", "resources" } },
-            { "LauncherStuff", new string[] { "debug.log", "settings.json", "RabbiTeamLauncher.exe", "locales", "Cache", "modpacks.json" } }
+            { "LauncherStuff", new string[] { "debug.log", "settings.json", "RabbiTeamLauncher.exe", "locales", "Cache", "modpacks.json", "launcherlog.log" } }
         };
 
         private void InitializeBrowser()
@@ -329,7 +329,7 @@ namespace RabbiTeamLauncher
                     " --userProperties {} " + //TODO properties such as resolution
                     "--userType legacy" + //planned to be legacy/mojang
                     " --tweakClass cpw.mods.fml.common.launcher.FMLTweaker"; //also will be variable set
-                Utils.Log("Full java arguments: " + info.Arguments);
+                Utils.Log("Full java command line: " + info.FileName + " " + info.Arguments);
 
                 if ((info.Arguments.Length) > 8192)
                 {

@@ -567,24 +567,33 @@ namespace RabbiTeamLauncher
             }
         }
 
-        public static string GetJavaInstallationPath() //from stackoverflow
+        public static string GetJavaInstallationPath() //this is very bad, but one of the most reliable methods to get correct Java install path, if you know somehing better, let me know
         {
             try
             {
-                var javaKey = "SOFTWARE\\JavaSoft\\Java Runtime Environment";
-                var arch = Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32;
+                string fileName = null;
 
-                using (var baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, arch).OpenSubKey(javaKey))
-                {
-                    var currentVersion = baseKey.GetValue("CurrentVersion").ToString();
-
-                    using (var homeKey = baseKey.OpenSubKey(currentVersion))
+                foreach (var path in Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.Machine).Split(';'))
+                    if (File.Exists(path + "\\java.exe"))
                     {
-                        var ret = homeKey.GetValue("JavaHome").ToString();
-                        Log("Java Path should be " + ret);
-                        return ret;
+                        fileName = path;
+                        break;
                     }
-                }
+
+                var proc = new Process();
+                var info = new ProcessStartInfo
+                {
+                    FileName = fileName + "\\java.exe",
+                    Arguments = "-verbose",
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    RedirectStandardOutput = true
+                };
+                proc.StartInfo = info;
+                proc.Start();
+                var output = proc.StandardOutput.ReadToEnd();
+                proc.WaitForExit();
+                return output.Substring(8, output.IndexOf(']') - 19);
             }
 
             catch (Exception ex)
@@ -993,8 +1002,8 @@ namespace RabbiTeamLauncher
 
         public static void Log(string message)
         {
-            File.AppendAllText(LB.AppPath + "/launcherlog.log", "[" + DateTimeOffset.Now.ToLocalTime() + "] " + message + Environment.NewLine);
+            if (LB.AppPath != null) //because nobody wants junk in drive's root folder
+                File.AppendAllText(LB.AppPath + "/launcherlog.log", "[" + DateTimeOffset.Now.ToLocalTime() + "] " + message + Environment.NewLine);
         }
-
     }
 }

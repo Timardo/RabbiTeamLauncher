@@ -38,6 +38,7 @@
             this.DevToolsButton = new System.Windows.Forms.Button();
             this.ShowConsoleCheck = new System.Windows.Forms.CheckBox();
             this.CloseAfterStart = new System.Windows.Forms.CheckBox();
+            this.OpenFolderButt = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // LauncherPathLabel
@@ -54,12 +55,12 @@
             this.LauncherPath.Location = new System.Drawing.Point(98, 12);
             this.LauncherPath.Name = "LauncherPath";
             this.LauncherPath.ReadOnly = true;
-            this.LauncherPath.Size = new System.Drawing.Size(623, 20);
+            this.LauncherPath.Size = new System.Drawing.Size(529, 20);
             this.LauncherPath.TabIndex = 1;
             // 
             // MigrateButton
             // 
-            this.MigrateButton.Location = new System.Drawing.Point(727, 10);
+            this.MigrateButton.Location = new System.Drawing.Point(633, 10);
             this.MigrateButton.Name = "MigrateButton";
             this.MigrateButton.Size = new System.Drawing.Size(88, 23);
             this.MigrateButton.TabIndex = 2;
@@ -127,11 +128,22 @@
             this.CloseAfterStart.UseVisualStyleBackColor = true;
             this.CloseAfterStart.CheckedChanged += new System.EventHandler(this.CloseAfterStartCheckChanged);
             // 
+            // OpenFolderButt
+            // 
+            this.OpenFolderButt.Location = new System.Drawing.Point(728, 10);
+            this.OpenFolderButt.Name = "OpenFolderButt";
+            this.OpenFolderButt.Size = new System.Drawing.Size(88, 23);
+            this.OpenFolderButt.TabIndex = 9;
+            this.OpenFolderButt.Text = "Open Folder";
+            this.OpenFolderButt.UseVisualStyleBackColor = true;
+            this.OpenFolderButt.Click += new System.EventHandler(this.OpenFolderButtClick);
+            // 
             // AdvancedSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(827, 406);
+            this.Controls.Add(this.OpenFolderButt);
             this.Controls.Add(this.CloseAfterStart);
             this.Controls.Add(this.ShowConsoleCheck);
             this.Controls.Add(this.DevToolsButton);
@@ -159,5 +171,6 @@
         private System.Windows.Forms.Button DevToolsButton;
         private System.Windows.Forms.CheckBox ShowConsoleCheck;
         private System.Windows.Forms.CheckBox CloseAfterStart;
+        private System.Windows.Forms.Button OpenFolderButt;
     }
 }
