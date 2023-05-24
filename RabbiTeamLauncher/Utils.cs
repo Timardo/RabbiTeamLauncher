@@ -428,11 +428,11 @@ namespace RabbiTeamLauncher
             try
             {
                 var index = new string[] { "CefLib", "CefSharpCore", "CefSharpForms", "WinApiPack", "NewtonSoftJson", "SharpCompress" };
+                Directory.CreateDirectory(LB.AppPath + "/Cache/temp_deps");
 
                 foreach (var entry in index)
                 {
                     DL.labels[0].Text = "Extracting " + entry + "...";
-                    Directory.CreateDirectory(LB.AppPath + "/Cache/temp_deps");
                     ZipFile.ExtractToDirectory(LB.AppPath + "/Cache/temp/" + entry + ".zip", LB.AppPath + "/Cache/temp_deps");
                     FS.MoveDirectory(LB.AppPath + "/Cache/temp_deps", LB.AppPath + "/Cache/temp_all", true);
                 }
@@ -458,7 +458,7 @@ namespace RabbiTeamLauncher
                 FS.MoveDirectory(LB.AppPath + "/Cache/temp_all", LB.AppPath, true);
                 Directory.Delete(LB.AppPath + "/Cache/temp", true);
                 Directory.Delete(LB.AppPath + "/CefSharp", true);
-                Application.Restart();
+                //Application.Restart();
             }
 
             catch (Exception ex)

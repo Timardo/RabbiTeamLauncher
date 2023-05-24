@@ -27,7 +27,7 @@ namespace RabbiTeamLauncher
                     i++;
                 }
 
-            if (i == FileIndex["Deps"].Length)
+            if (i == FileIndex["Deps"].Length || true)
             {
                 InitializeStub();
                 Utils.DownloaderConstructor(downloadType: DownloadType.Deps);
@@ -135,11 +135,11 @@ namespace RabbiTeamLauncher
         }
 
         public static ComboBox PackList;
-        public static string LauncherVersion = "1.0.3";
+        public static string LauncherVersion = "1.0.4";
         public static Downloader Downloader = null;
         public static LauncherSettings Settings;
         public static string ModpackUrl;
-        public static UpdateInfo UpdateInfo = "https://raw.githubusercontent.com/Timardo/RabbiTeamLauncher/Default/UpdateInfo.txt".GetResponse().ToUpdateInfo();
+        public static UpdateInfo UpdateInfo = "https://raw.githubusercontent.com/Timardo/RabbiTeamLauncher/rework/UpdateInfo.txt".GetResponse().ToUpdateInfo();
         public static string AppPath = Application.StartupPath;
         public static string JVMArguments;
         public static ModPackLocalJson Packs;
