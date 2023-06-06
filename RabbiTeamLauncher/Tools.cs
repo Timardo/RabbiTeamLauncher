@@ -9,22 +9,21 @@ namespace RabbiTeamLauncher
 {
     public partial class Tools : Form
     {
-
+        private bool _firstDiff = true;
+        private string _oldindex;
+        private string _newindex;
+        private static readonly string IndexPath = StaticElements.AppPath + "\\changelog.txt";
+        private static readonly string[] StringSeparator1 = new string[] { Environment.NewLine };
+        private static readonly string[] StringSeparator2 = new string[] { ", " };
+        
         public Tools()
         {
             InitializeComponent();
-            textBox1.Text = "F:\\Moje veci\\Projects\\GitHub\\RabbiTeamLauncher\\RabbiTeamLauncher\\bin";
-            textBox3.Text = "F:\\Moje veci\\Projects\\GitHub\\RabbiTeamLauncher\\RabbiTeamLauncher\\bin";
+            textBox1.Text = StaticElements.AppPath;
+            textBox3.Text = StaticElements.AppPath;
         }
 
-        bool firstDiff = true;
-        string oldindex;
-        string newindex;
-        public static string indexPath = LauncherBody.AppPath + "\\changelog.txt";
-        string[] stringSeparator1 = new string[] { Environment.NewLine };
-        string[] stringSeparator2 = new string[] { ", " };
-
-        public string hashCheck(string filename)
+        public string HashCheck(string filename)
         {
             using (var md5 = MD5.Create())
             {
@@ -35,22 +34,20 @@ namespace RabbiTeamLauncher
             }
         }
 
-        public void append(string action, string oldpath)
+        public void Append(string action, string oldpath)
         {
-
-            if (firstDiff) //we want version number before all the differencies
+            if (_firstDiff) // version number before all the diffs
             {
-
-                using (StreamWriter sw = File.AppendText(indexPath))
+                using (StreamWriter sw = File.AppendText(IndexPath))
                 {
                     sw.WriteLine("VERSION, " + Strings.Right(textBox3.Text, 3));
                 }
 
                 textBox2.AppendText("VERSION, " + Strings.Right(textBox3.Text, 3) + Environment.NewLine);
-                firstDiff = false;
+                _firstDiff = false;
             }
 
-            using (StreamWriter sw = File.AppendText(indexPath))
+            using (StreamWriter sw = File.AppendText(IndexPath))
             {
                 sw.WriteLine(action + ", " + oldpath);
             }
@@ -59,21 +56,23 @@ namespace RabbiTeamLauncher
         }
 
         //pick the folder of old version of a modpack
-        private void button1_Click(object sender, EventArgs e)
+        private void OldVersionButtonClick(object sender, EventArgs e)
         {
 
             CommonOpenFileDialog oldVersion = new CommonOpenFileDialog
             {
-                InitialDirectory = "F:\\Moje veci\\Projects\\GitHub\\RabbiTeamLauncher\\RabbiTeamLauncher\\bin",
+                InitialDirectory = StaticElements.AppPath,
                 IsFolderPicker = true,
             };
 
             if (oldVersion.ShowDialog() == CommonFileDialogResult.Ok)
+            {
                 textBox1.Text = oldVersion.FileName;
+            }                
 
         }
         //making the index of files from old version
-        private void button7_Click(object sender, EventArgs e)
+        private void OldVersionGetFilesButtonClick(object sender, EventArgs e)
         {
             string path = textBox1.Text; //path to old version
             string[] file;
@@ -81,46 +80,36 @@ namespace RabbiTeamLauncher
 
             for (int i = 0; i < folders.Length; i++)
             {
-                    file = Directory.GetFiles(folders[i]); //get all files in specific folder (folder names in string[] folders are paths not just names)
+                file = Directory.GetFiles(folders[i]); //get all files in specific folder (folder names in string[] folders are paths not just names)
 
-                    for (int j = 0; j < file.Length; j++)
-                    {
-                        file[j] = file[j] + ", " + hashCheck(file[j]);
-                        //path from launcher/name.ext hash of file to check its uniqueness
+                for (int j = 0; j < file.Length; j++)
+                {
+                    file[j] = file[j] + ", " + HashCheck(file[j]); //path from launcher/name.ext hash of file to check its uniqueness
+                file[j] = file[j].Replace(path + "\\", ""); //converting paths to desired and better-handleable format
+                }
 
-                        try
-                        {
-                            file[j] = file[j].Replace(path + "\\", ""); //converting paths to desired and better-handleable format
-                        }
-
-                        catch
-                        {
-
-                        } //because PCs are not flawless
-
-                    }
-
-                    if (!(file == null || file.Length == 0))
-                        oldindex += Environment.NewLine + string.Join(Environment.NewLine, file);
-
+                if (!(file == null || file.Length == 0))
+                {
+                    _oldindex += Environment.NewLine + string.Join(Environment.NewLine, file);
+                }
             }
-
         }
         //pick the folder of new version of a modpack
-        private void button2_Click(object sender, EventArgs e)
+        private void NewVersionButtonClick(object sender, EventArgs e)
         {
             CommonOpenFileDialog newVersion = new CommonOpenFileDialog
             {
-                InitialDirectory = "F:\\Moje veci\\Projects\\GitHub\\RabbiTeamLauncher\\RabbiTeamLauncher\\bin",
+                InitialDirectory = StaticElements.AppPath,
                 IsFolderPicker = true,
             };
 
             if (newVersion.ShowDialog() == CommonFileDialogResult.Ok)
+            {
                 textBox3.Text = newVersion.FileName;
-
+            }
         }
         //getting the index of files from new version
-        private void button3_Click(object sender, EventArgs e)
+        private void NewVersionGetFilesButtonClick(object sender, EventArgs e)
         {
             string path = textBox3.Text;
             string[] file;
@@ -132,33 +121,22 @@ namespace RabbiTeamLauncher
 
                 for (int j = 0; j < file.Length; j++)
                 {
-                    file[j] = file[j] + ", " + hashCheck(file[j]);
-                    //path from launcher/name.ext hash (to check "version" of file)
-
-                    try
-                    {
-                        file[j] = file[j].Replace(path + "\\", "");
-                    }
-
-                    catch
-                    {
-
-                    }
-
+                    file[j] = file[j] + ", " + HashCheck(file[j]); //path from launcher/name.ext hash (to check "version" of file)
+                    file[j] = file[j].Replace(path + "\\", "");
                 }
 
                 if (!(file == null || file.Length == 0))
-                    newindex += Environment.NewLine + string.Join(Environment.NewLine, file);
-
+                {
+                    _newindex += Environment.NewLine + string.Join(Environment.NewLine, file);
+                }
             }
-
         }
 
         //GetDiffs Button - getting diffs between new and old version
-        private void button4_Click(object sender, EventArgs e)
+        private void GetDiffstButtonClick(object sender, EventArgs e)
         {
-            string[] old = oldindex.Split(stringSeparator1, StringSplitOptions.RemoveEmptyEntries); //making an array from the index
-            string[] new1 = newindex.Split(stringSeparator1, StringSplitOptions.RemoveEmptyEntries);
+            string[] old = _oldindex.Split(StringSeparator1, StringSplitOptions.RemoveEmptyEntries); //making an array from the index
+            string[] new1 = _newindex.Split(StringSeparator1, StringSplitOptions.RemoveEmptyEntries);
             string[][] oldarray = new string[old.Length][]; //idk what is the meaning of these things, but it's working
             string[][] newarray = new string[new1.Length][];
             int maxIndex = Math.Max(old.Length, new1.Length);
@@ -166,14 +144,17 @@ namespace RabbiTeamLauncher
             for (int i = 0; i < maxIndex; i++)
             {
                 if (i < old.Length)
-                    oldarray[i] = old[i].Split(stringSeparator2, StringSplitOptions.RemoveEmptyEntries);
+                {
+                    oldarray[i] = old[i].Split(StringSeparator2, StringSplitOptions.RemoveEmptyEntries);
+                }
 
-                if (i< new1.Length)
-                    newarray[i] = new1[i].Split(stringSeparator2, StringSplitOptions.RemoveEmptyEntries);
-
+                if (i < new1.Length)
+                {
+                    newarray[i] = new1[i].Split(StringSeparator2, StringSplitOptions.RemoveEmptyEntries);
+                }
             }
 
-            string[] i1 = new string[newarray.Length]; //jeez I really don't remember what is this code for
+            string[] i1 = new string[newarray.Length]; // I really don't remember what this code is for
             string[] i0 = new string[newarray.Length];
 
             for (int s = 0; s < newarray.Length; s++)
@@ -188,64 +169,75 @@ namespace RabbiTeamLauncher
             for (int i = 0; i < maxIndex; i++)
             {
                 if (i < oldarray.Length)
+                {
                     oldarray1D += string.Join("|", oldarray[i]);
+                }
 
                 if (i < newarray.Length)
+                {
                     newarray1D += string.Join("|", newarray[i]);
-
+                }
             }
 
             for (int i = 0; i < maxIndex; i++)
             {
                 if (i < oldarray.Length)
+                {
                     if (newarray1D.Contains(oldarray[i][0]))
-                        if (newarray[Array.IndexOf(i0, oldarray[i][0])][1].Equals(oldarray[i][1]))
-                            ;
-
-                        else
-                            markAsChanged(oldarray[i][0]);
+                    {
+                        if (!newarray[Array.IndexOf(i0, oldarray[i][0])][1].Equals(oldarray[i][1]))
+                        {
+                            MarkAsChanged(oldarray[i][0]);
+                        }
+                    }
 
                     else if (newarray1D.Contains(oldarray[i][1]))
-                        markAsRenamed(oldarray[i][0], newarray[Array.IndexOf(i1, oldarray[i][1])][0]);
+                    {
+                        MarkAsRenamed(oldarray[i][0], newarray[Array.IndexOf(i1, oldarray[i][1])][0]);
+                    }
 
                     else
-                        markAsRemoved(oldarray[i][0]);
+                    {
+                        MarkAsRemoved(oldarray[i][0]);
+                    }
+                }
 
                 if (i < newarray.Length)
+                {
                     if (!oldarray1D.Contains(newarray[i][1]) && !oldarray1D.Contains(newarray[i][0]))
-                        markAsAdded(newarray[i][0]);
-
+                    {
+                        MarkAsAdded(newarray[i][0]);
+                    }
+                }
             }
-
         }
 
-        private void markAsRemoved(string oldpath)
+        private void MarkAsRemoved(string oldpath)
         {
-            append("REMOVED", oldpath);
+            Append("REMOVED", oldpath);
         }
 
-        private void markAsRenamed(string oldPath, string newPath)
+        private void MarkAsRenamed(string oldPath, string newPath)
         {
             var renamedFile = MessageBox.Show("Renamed file found!" + Environment.NewLine + "OLD PATH: " + oldPath + Environment.NewLine + "NEW PATH: " + newPath + Environment.NewLine + "Do you want to mark this file as REMOVED/ADDED?", "Renamed File Found Exception", MessageBoxButtons.YesNo);
 
             if (renamedFile == DialogResult.Yes)
             {
-                markAsRemoved(oldPath);
-                markAsAdded(newPath);
+                MarkAsRemoved(oldPath);
+                MarkAsAdded(newPath);
             }
-
         }
 
-        private void markAsAdded(string path)
+        private void MarkAsAdded(string path)
         {
-            append("ADDED", path);
+            Append("ADDED", path);
         }
 
-        private void markAsChanged(string path)
+        private void MarkAsChanged(string path)
         {
-            append("CHANGED", path);
+            Append("CHANGED", path);
         }
 
-        private void button5_Click(object sender, EventArgs e) { }
+        private void MakeBatScriptButtonClick(object sender, EventArgs e) { }
     }
 }

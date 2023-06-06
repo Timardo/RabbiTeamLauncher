@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdvancedSettings));
             this.LauncherPathLabel = new System.Windows.Forms.Label();
             this.LauncherPath = new System.Windows.Forms.TextBox();
             this.MigrateButton = new System.Windows.Forms.Button();
@@ -83,7 +82,6 @@
             this.JavaArgs.Name = "JavaArgs";
             this.JavaArgs.Size = new System.Drawing.Size(623, 20);
             this.JavaArgs.TabIndex = 4;
-            this.JavaArgs.Text = resources.GetString("JavaArgs.Text");
             this.JavaArgs.TextChanged += new System.EventHandler(this.JavaArgsTextChanged);
             // 
             // ResetArgsButton
@@ -142,7 +140,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(827, 406);
+            this.ClientSize = new System.Drawing.Size(827, 195);
             this.Controls.Add(this.OpenFolderButt);
             this.Controls.Add(this.CloseAfterStart);
             this.Controls.Add(this.ShowConsoleCheck);
@@ -153,7 +151,11 @@
             this.Controls.Add(this.MigrateButton);
             this.Controls.Add(this.LauncherPath);
             this.Controls.Add(this.LauncherPathLabel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "AdvancedSettings";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "advSettings";
             this.ResumeLayout(false);
             this.PerformLayout();

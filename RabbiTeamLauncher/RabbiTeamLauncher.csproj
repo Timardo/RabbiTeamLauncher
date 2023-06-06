@@ -129,6 +129,7 @@
     <Compile Include="AdvancedSettings.Designer.cs">
       <DependentUpon>AdvancedSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="StaticElements.cs" />
     <Compile Include="CustomClasses.cs" />
     <Compile Include="JsonClasses.cs" />
     <Compile Include="Utils.cs" />
@@ -138,11 +139,11 @@
     <Compile Include="Tools.designer.cs">
       <DependentUpon>Tools.cs</DependentUpon>
     </Compile>
-    <Compile Include="LauncherBody.cs">
+    <Compile Include="Launcher.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LauncherBody.Designer.cs">
-      <DependentUpon>LauncherBody.cs</DependentUpon>
+    <Compile Include="Launcher.Designer.cs">
+      <DependentUpon>Launcher.cs</DependentUpon>
     </Compile>
     <Compile Include="Downloader.cs">
       <SubType>Form</SubType>
@@ -158,8 +159,8 @@
     <EmbeddedResource Include="Tools.resx">
       <DependentUpon>Tools.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LauncherBody.resx">
-      <DependentUpon>LauncherBody.cs</DependentUpon>
+    <EmbeddedResource Include="Launcher.resx">
+      <DependentUpon>Launcher.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Downloader.resx">
       <DependentUpon>Downloader.cs</DependentUpon>

@@ -45,6 +45,7 @@
             this.MinimizeBox = false;
             this.Name = "Downloader";
             this.RightToLeftLayout = true;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Downloader";
             this.ResumeLayout(false);
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using System.Globalization;
+using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using J = Newtonsoft.Json.JsonPropertyAttribute;
@@ -12,13 +13,14 @@ namespace RabbiTeamLauncher
     //all the information about downloaded modpacks, not fully implemented
     public class ModPackLocalJson
     {
+        public ModPackLocalJson(int modpackJsonVersion)
+        {
+            ModpackJsonVersion = modpackJsonVersion;
+            ModpackList = new Dictionary<string, ModpackEntry>();
+        }
+
         public int ModpackJsonVersion { get; set; }
         public Dictionary<string, ModpackEntry> ModpackList { get; set; }
-
-        public void UpdatePrompt()
-        {
-            System.Windows.Forms.MessageBox.Show("It looks like your Launcher is outdated, this is not good." + Environment.NewLine + Environment.NewLine + "How did this even happen?");
-        }
     }
 
     public class ModpackEntry
@@ -54,11 +56,6 @@ namespace RabbiTeamLauncher
         [J("additional_libs", NullValueHandling = N.Ignore)] public List<string> AdditionalLibs { get; set; }
         [J("default_jvm_args", NullValueHandling = N.Ignore)] public string DefaultJavaArgs { get; set; }
         [J("mod_list")] public ModList ModList { get; set; }
-
-        public void UpdatePrompt()
-        {
-            throw new NotImplementedException(); //since there is only one version of Modpack JSON, this doesn't have any function, yet
-        }
     }
 
     public class ModList
@@ -72,7 +69,36 @@ namespace RabbiTeamLauncher
     }
 
     public class UpdateInfo
-    {
+    { //TODO: change to JSON format
+        public UpdateInfo(string url)
+        {
+            try
+            {
+                var source = Utils.GetResponse(url);
+                var lines = source.Split(new string[] { Environment.NewLine, "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+                //Log("Full update info: " + source); // no reason to log
+
+                foreach (var line in lines)
+                {
+                    if      (line.StartsWith("VERSION = "))                  Version = line.Replace("VERSION = ", "");
+                    else if (line.StartsWith("CEF_LIB_VERSION = "))          CefLibVersion = line.Replace("CEF_LIB_VERSION = ", "");
+                    else if (line.StartsWith("CEF_SHARP_VERSION = "))        CefSharpVersion = line.Replace("CEF_SHARP_VERSION = ", "");
+                    else if (line.StartsWith("WIN_API_CODEPACK_VERSION = ")) WinAPICodePackVersion = line.Replace("WIN_API_CODEPACK_VERSION = ", "");
+                    else if (line.StartsWith("NEWTONSOFT_JSON_VERSION = "))  NewtonSoftJsonVersion = line.Replace("NEWTONSOFT_JSON_VERSION = ", "");
+                    else if (line.StartsWith("SHARP_COMPRESS_VERSION = "))   SharpCompressVersion = line.Replace("SHARP_COMPRESS_VERSION = ", "");
+                    else if (line.StartsWith("NUGET_ROOT = "))               NuGetRoot = line.Replace("NUGET_ROOT = ", "");
+                    else if (line.StartsWith("CHROME_URL = "))               ChromeUrl = line.Replace("CHROME_URL = ", "");
+                    else if (line.StartsWith("MODPACK_URL = "))              ModpackListRoot = line.Replace("MODPACK_URL = ", "");
+                    else if (line.StartsWith("UPDATE_URL = "))               UpdateUrl = line.Replace("UPDATE_URL = ", "");
+                }
+            }
+
+            catch (Exception)
+            {
+                // Launcher does not count with being offline currently TODO: ADD AN OFFLINE MODE
+            }
+        }
+
         public string Version { get; set; }
         public string CefLibVersion { get; set; }
         public string CefSharpVersion { get; set; }
@@ -88,13 +114,96 @@ namespace RabbiTeamLauncher
 
     public class LauncherSettings
     {
-        [J("nick")] public string Nick { get; set; }
-        [J("ram")] public int Ram { get; set; }
-        [J("show_console")] public bool ShowConsole { get; set; }
-        [J("close_after_start")] public bool CloseAfterStart { get; set; }
-        [J("jvm_arguments")] public string JVMArguments { get; set; }
-        [J("latest_uuid")] public string LatestUuid { get; set; }
-        [J("latest_modpack")] public string LatestModpack { get; set; }
+        private string _nick;
+        private int _ram;
+        private bool _showConsole;
+        private bool _closeAfterStart;
+        private string _JVMArguments;
+        private string _latestUUID;
+        private string _latestModpack;
+        public event EventHandler OnSettingsChanged;
+
+        public LauncherSettings()
+        {
+            OnSettingsChanged += Save;
+        }
+
+        [J("nick")] public string Nick
+        {
+            get => _nick;
+            set
+            {
+                _nick = value;
+                OnSettingsChanged.Invoke(this, EventArgs.Empty);
+            }
+        }
+        [J("ram")] public int Ram
+        {
+            get => _ram;
+            set
+            {
+                _ram = value;
+                OnSettingsChanged.Invoke(this, EventArgs.Empty);
+            }
+        }
+        [J("show_console")] public bool ShowConsole
+        {
+            get => _showConsole;
+            set
+            {
+                _showConsole = value;
+                OnSettingsChanged.Invoke(this, EventArgs.Empty);
+            }
+        }
+        [J("close_after_start")] public bool CloseAfterStart
+        {
+            get => _closeAfterStart;
+            set
+            {
+                _closeAfterStart = value;
+                OnSettingsChanged.Invoke(this, EventArgs.Empty);
+            }
+        }
+        [J("jvm_arguments")] public string JVMArguments
+        {
+            get => _JVMArguments;
+            set
+            {
+                _JVMArguments = value;
+                OnSettingsChanged.Invoke(this, EventArgs.Empty);
+            }
+        }
+        [J("latest_uuid")] public string LatestUUID
+        {
+            get => _latestUUID;
+            set
+            {
+                _latestUUID = value;
+                OnSettingsChanged.Invoke(this, EventArgs.Empty);
+            }
+        }
+        [J("latest_modpack")] public string LatestModpack
+        {
+            get => _latestModpack;
+            set
+            {
+                _latestModpack = value;
+                OnSettingsChanged.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+
+        public void Save(object sender, EventArgs e)
+        {
+            try
+            {
+                File.WriteAllText(StaticElements.SettingsPath, Utils.ToJsonString(this));
+            }
+            catch (IOException)
+            {
+                // file is probably still open, ignore
+            }
+        }
     }
 
     public class YandexDiskDownJson

@@ -1,0 +1,497 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="RabbiTeamLauncher.AdvancedSettings">
+    <Position X="0.5" Y="5" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>gAAKABAAECAAAQAJgmCAIAACACFAAAAAAAAAAACAQAE=</HashCode>
+      <FileName>AdvancedSettings.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_settings" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RabbiTeamLauncher.DownloadActionArgs">
+    <Position X="7.75" Y="0.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.ForgeDownloadCompletedActionArgs">
+    <Position X="0.5" Y="2.75" Width="5.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>CustomClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.ModpackDownloadCompletedActionArgs">
+    <Position X="0.5" Y="0.5" Width="6.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.DownloadBeforeStartActionArgs" Collapsed="true">
+    <Position X="29.5" Y="6.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.DownloadJob">
+    <Position X="6" Y="3" Width="8.75" />
+    <AssociationLine Name="FilesToDownload" Type="RabbiTeamLauncher.FileToDownload" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="14.75" Y="3.094" />
+        <Point X="23.812" Y="3.094" />
+        <Point X="23.812" Y="2.632" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAAAAAAAAACgAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomClasses.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="BeforeStartAction" />
+      <Property Name="CompletedAction" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="FilesToDownload" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="RabbiTeamLauncher.DownloadAction">
+    <Position X="11.25" Y="0.5" Width="5.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>CustomClasses.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Action" />
+      <Property Name="ActionArgs" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RabbiTeamLauncher.FileToDownload">
+    <Position X="17.25" Y="0.5" Width="8.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAACgACAAAAAAAAAA=</HashCode>
+      <FileName>CustomClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.DownloadConstructorException">
+    <Position X="6.5" Y="15" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.GetResponseException">
+    <Position X="7" Y="12" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.MissingLibException">
+    <Position X="6.75" Y="13.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Downloader">
+    <Position X="0.5" Y="11.25" Width="5.25" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAACDAAAAAAAAGAAABCACKBAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Downloader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.ModPackLocalJson">
+    <Position X="6" Y="10" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.ModpackEntry" Collapsed="true">
+    <Position X="29.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IQACACAACAAgAABAAQAAADAAAAgCAAAABAAAAAAAIAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.ModPackOnlineJson" Collapsed="true">
+    <Position X="29.5" Y="6" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AQACACAACAAgAAAAAQAAACQAAAACBAAABAAEAAAAIAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.ModList" Collapsed="true">
+    <Position X="31.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAIAAAAAgAEAAAAQAAAAAAAAAI=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.UpdateInfo">
+    <Position X="15.5" Y="7.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>IAAAACAAAAAABAAgAAEAAAAACCAgAAAAQAAAAAABABA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.LauncherSettings">
+    <Position X="5.5" Y="4.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAIAEAAAACAACAAIAoBCAgBIAAAAIAAAKAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.YandexDiskDownJson" Collapsed="true">
+    <Position X="31.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAgAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.AssetIndex" Collapsed="true">
+    <Position X="27.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Objects" Collapsed="true">
+    <Position X="26" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.YandexDiskJson" Collapsed="true">
+    <Position X="29.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAiAAgEIBABAAAAQAAEAAAAQAAQAAAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.CommentIds" Collapsed="true">
+    <Position X="27.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Embedded" Collapsed="true">
+    <Position X="26" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAIAAAAQAQQAAAAAQAAAAAAAAAAAgAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Owner" Collapsed="true">
+    <Position X="29.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAABAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.ForgeJson" Collapsed="true">
+    <Position X="26" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAIAEAAAAAgAAEQAAAAAAAAAQAgAQAAAQQ=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.ForgeLibrary" Collapsed="true">
+    <Position X="27.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAQAAAAAAgQAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.McVersionsManifest" Collapsed="true">
+    <Position X="27.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAIAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Latest" Collapsed="true">
+    <Position X="27.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Versions" Collapsed="true">
+    <Position X="31.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAEAAAAAAAAAAAAAAAAAACQAAAAAAAQA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.McVersionJson" Collapsed="true">
+    <Position X="26" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgCAAAAAAAAAEAAAAIgAAEQAAAAAQAAIAEgAAAAAQQ=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Arguments" Collapsed="true">
+    <Position X="26" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.GameArgs" Collapsed="true">
+    <Position X="26" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.JvmArgs" Collapsed="true">
+    <Position X="27.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Rules" Collapsed="true">
+    <Position X="29.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAQAAAAAAAAAAAAQ=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Os" Collapsed="true">
+    <Position X="31.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Conditions" Collapsed="true">
+    <Position X="29.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAQgAAAABAAAAAAAgAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Downloads" Collapsed="true">
+    <Position X="29.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAgAAAAQ=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.DownloadInfo" Collapsed="true">
+    <Position X="27.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAgAIAAAEAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Library" Collapsed="true">
+    <Position X="27.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAIAAAQAAAAAAAAAQAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.LibraryDownloads" Collapsed="true">
+    <Position X="27.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Classifiers" Collapsed="true">
+    <Position X="26" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAQAAAFAAAAAAAQAQAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Extract" Collapsed="true">
+    <Position X="31.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Natives" Collapsed="true">
+    <Position X="29.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAABAAAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Logging" Collapsed="true">
+    <Position X="26" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.LoggingClient" Collapsed="true">
+    <Position X="26" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAIQAAAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Converter" Collapsed="true">
+    <Position X="31.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.GameElementConverter" Collapsed="true">
+    <Position X="26" Y="9.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQQAAAAAAAAAAAAAAAAAAAEAAAAAAAAACAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.ValueConverter" Collapsed="true">
+    <Position X="26" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQQAAAAAAAAAAAAAAAAAAAEAAAAAAAAACAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.JvmElementConverter" Collapsed="true">
+    <Position X="27.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQQAAAAAAAAAAAAAAAAAAAEAAAAAAAAACAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.TypeEnumConverter" Collapsed="true">
+    <Position X="29.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQQAAAAAAAAAAAAAAAAAAAEAAAAAAAAACAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Launcher">
+    <Position X="10.25" Y="5" Width="5" />
+    <AssociationLine Name="Packs" Type="RabbiTeamLauncher.ModPackLocalJson" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10.25" Y="8.708" />
+        <Point X="9.438" Y="8.708" />
+        <Point X="9.438" Y="10" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>QAASDAgAQDAAkNABgACCAAACgglGAi4CwAAIQAAEAkA=</HashCode>
+      <FileName>Launcher.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_downloader" />
+      <Property Name="Packs" />
+      <Property Name="Settings" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Program">
+    <Position X="19" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.StaticElements">
+    <Position X="15.5" Y="3.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAUAFAAQAABQAAAgAAAAAIiAAAABAAAAABgI=</HashCode>
+      <FileName>StaticElements.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Constants">
+    <Position X="18.5" Y="3.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAEACABAAEAAAAAAAAAAAAAARAAQGAAAAAAAAAQ=</HashCode>
+      <FileName>StaticElements.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Tools">
+    <Position X="21.25" Y="3.25" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>ATEgARAAACAAAAAAgICAAgBCAMA6EYAAEEgAQAAIAAg=</HashCode>
+      <FileName>Tools.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Utils">
+    <Position X="15.5" Y="11.5" Width="15" />
+    <TypeIdentifier>
+      <HashCode>AAAIghgIAAAAECAAAEAQABIgAAAEACQAAAIABAAAAAA=</HashCode>
+      <FileName>Utils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Properties.Resources" Collapsed="true">
+    <Position X="31.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACBAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RabbiTeamLauncher.Properties.Settings" Collapsed="true">
+    <Position X="31.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="RabbiTeamLauncher.GameElement" Collapsed="true">
+    <Position X="26" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="RabbiTeamLauncher.JvmElement" Collapsed="true">
+    <Position X="27.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="RabbiTeamLauncher.Value" Collapsed="true">
+    <Position X="29.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAQAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="RabbiTeamLauncher.DownloadType" Collapsed="true">
+    <Position X="31.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAMAAAAQAAAAAAAAAAAAAABEAAAAAAAAA=</HashCode>
+      <FileName>CustomClasses.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="RabbiTeamLauncher.TypeEnum" Collapsed="true">
+    <Position X="31.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAACAAAAAAAAAAAAIAAAAABAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="RabbiTeamLauncher.OsEnum" Collapsed="true">
+    <Position X="31.5" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAABAAAAAAAAA=</HashCode>
+      <FileName>JsonClasses.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="RabbiTeamLauncher.DownloadActionDelegate">
+    <Position X="15" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CustomClasses.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

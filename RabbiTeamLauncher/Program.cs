@@ -13,7 +13,7 @@ namespace RabbiTeamLauncher
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LauncherBody());
+            Application.Run(new Launcher());
         }
     }
 }
